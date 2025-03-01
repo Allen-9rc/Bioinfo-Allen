@@ -10,3 +10,8 @@
 ### 4. ###
 `awk '{temp=$2; $2=$3; $3=temp; print}' test_command.gtf | sort -k4,4n -k5,5n >> result.gtf`
 ### 5. ###
+```
+ls -l
+chmod 744 test_command.gtf
+ls -l
+```
