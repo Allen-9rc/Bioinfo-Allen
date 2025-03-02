@@ -33,7 +33,7 @@ XI	ensembl	CDS	98721	99638	.	+	0	gene_id "YKL183W"; gene_version "1"; transcript
 14730
 ```
 ### 4. ###
-`cat 1.gtf | awk '$1 == "XV" && $3 == "gene"{len = $5-$4+1; split($10,x,";"); name = x[1]; gsub("\"","",name); print name,len}' | sort -k2,2n | tail -n 5`
+`cat 1.gtf | awk -F"\t" '$1 == "XV" && $3 == "gene"{len = $5-$4+1; split($9,x,";"); name = x[1]; gsub("\"","",name); gsub("gene_id","",name); print name,len}' | sort -k2,2n | tail -n 5`
 ```
 YOR142W-B 5269
 YOR192C-B 5314
