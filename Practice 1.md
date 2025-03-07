@@ -44,7 +44,7 @@ Mito	ensembl	stop_codon	85707	85709	.	+	0	gene_id "Q0297"; gene_version "1"; tra
 `42252 1.gtf`  
 `grep -v "^#" 1.gtf | grep -v "^$" | wc -l`  
 `42247`  
-`cat 1.gtf | awk '$0!~/^\s*$/{print}' | head -10`  
+`cat 1.gtf | awk '$0!~/^\s*$/{print}' | head -10`或`grep -v '^\s*$' 1.gtf | head -10`  
 ```
 #!genome-build R64-1-1
 #!genome-version R64-1-1
@@ -58,3 +58,75 @@ IV	ensembl	CDS	1802	2950	.	+	0	gene_id "YDL248W"; gene_version "1"; transcript_i
 IV	ensembl	start_codon	1802	1804	.	+	0	gene_id "YDL248W"; gene_version "1"; transcript_id "YDL248W"; transcript_version "1"; exon_number "1"; gene_name "COS7"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "COS7"; transcript_source "ensembl"; transcript_biotype "protein_coding";
 ```
 step 2  
+`cat 1.gtf | awk ' { print $1, $2, $3 } ' | head`或`cat 1.gtf | cut -f 1,2,3 | head`  
+```
+#!genome-build R64-1-1
+#!genome-version R64-1-1
+#!genome-date 2011-09
+#!genome-build-accession :GCA_000146045.2
+#!genebuild-last-updated 2011-12
+IV ensembl gene
+IV ensembl transcript
+IV ensembl exon
+IV ensembl CDS
+IV ensembl start_codon
+```
+`cat 1.gtf | awk '$3 =="gene" { print $1, $3, $9 } ' | head`
+```
+IV gene gene_id
+IV gene gene_id
+IV gene gene_id
+IV gene gene_id
+IV gene gene_id
+IV gene gene_id
+IV gene gene_id
+IV gene gene_id
+IV gene gene_id
+IV gene gene_id
+```
+step 3  
+`grep -v '^#' 1.gtf |awk '{print $3}'| sort | uniq -c`
+```
+   7050 CDS
+   7553 exon
+   7126 gene
+   6700 start_codon
+   6692 stop_codon
+   7126 transcript
+```
+`cat 1.gtf | awk 'BEGIN{L=0;}$3 =="CDS"{L+=$5-$4 + 1;}END{print L;}'`  
+`9030648`  
+`awk 'BEGIN  {s = 0;line = 0;}$3 =="CDS" && $1 =="I"{ s += $5-$4+1;line += 1}END {print "mean="s/line}' 1.gtf`  
+`mean=1239.52`  
+`cat 1.gtf | awk -F"\t" '$3 == "gene"{split($9,x,";");name = x[1];gsub("\"", "", name);gsub("gene_id", "", name);print "gene_id:",name,"length=",$5-$4+1}' | head` 
+```
+gene_id:  YDL248W length= 1152
+gene_id:  YDL247W-A length= 75
+gene_id:  YDL247W length= 1830
+gene_id:  YDL246C length= 1074
+gene_id:  YDL245C length= 1704
+gene_id:  YDL244W length= 1023
+gene_id:  YDL243C length= 990
+gene_id:  YDL242W length= 354
+gene_id:  YDL241W length= 372
+gene_id:  YDL240C-A length= 138
+```
+step 4  
+```
+grep exon 1.gtf | awk '{print $5-$4+1}' | sort -n | tail -3 > 1.txt
+cat 1.txt
+mv 1.txt /home/test/share
+```
+或  
+```
+vi run.sh
+#!/bin/bash   
+grep exon *.gtf | awk '{print $5-$4+1}' | sort -n | tail -3
+chmod u+x run.sh
+./run.sh
+```
+```
+12279
+14730
+14733
+```
