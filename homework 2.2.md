@@ -1,18 +1,18 @@
 # 1. Linux #
 ## 1.2 Practice Guide ##
 ### 1. ###
-`grep CDS 1.gtf | grep -w XI | sort -k 5 | tail -n 10`
+`grep CDS 1.gtf | grep -w XI | sort -k 5 -n | tail -n 10`
 ```
-XI	ensembl	CDS	82947	82998	.	+	0	gene_id "YKL190W"; gene_version "1"; transcript_id "YKL190W"; transcript_version "1"; exon_number "1"; gene_name "CNB1"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "CNB1"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKL190W"; protein_version "1";
-XI	ensembl	CDS	83075	83547	.	+	1	gene_id "YKL190W"; gene_version "1"; transcript_id "YKL190W"; transcript_version "1"; exon_number "2"; gene_name "CNB1"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "CNB1"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKL190W"; protein_version "1";
-XI	ensembl	CDS	84704	85900	.	+	0	gene_id "YKL189W"; gene_version "1"; transcript_id "YKL189W"; transcript_version "1"; exon_number "1"; gene_name "HYM1"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "HYM1"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKL189W"; protein_version "1";
-XI	ensembl	CDS	86228	88786	.	-	0	gene_id "YKL188C"; gene_version "1"; transcript_id "YKL188C"; transcript_version "1"; exon_number "1"; gene_name "PXA2"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "PXA2"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKL188C"; protein_version "1";
-XI	ensembl	CDS	89287	91536	.	-	0	gene_id "YKL187C"; gene_version "1"; transcript_id "YKL187C"; transcript_version "1"; exon_number "1"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "YKL187C"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKL187C"; protein_version "1";
-XI	ensembl	CDS	92747	93298	.	-	0	gene_id "YKL186C"; gene_version "1"; transcript_id "YKL186C"; transcript_version "1"; exon_number "1"; gene_name "MTR2"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "MTR2"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKL186C"; protein_version "1";
-XI	ensembl	CDS	94499	96262	.	+	0	gene_id "YKL185W"; gene_version "1"; transcript_id "YKL185W"; transcript_version "1"; exon_number "1"; gene_name "ASH1"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "ASH1"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKL185W"; protein_version "1";
-XI	ensembl	CDS	96757	98154	.	+	0	gene_id "YKL184W"; gene_version "1"; transcript_id "YKL184W"; transcript_version "1"; exon_number "1"; gene_name "SPE1"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "SPE1"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKL184W"; protein_version "1";
-XI	ensembl	CDS	98398	98607	.	-	0	gene_id "YKL183C-A"; gene_version "1"; transcript_id "YKL183C-A"; transcript_version "1"; exon_number "1"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "YKL183C-A"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKL183C-A"; protein_version "1";
-XI	ensembl	CDS	98721	99638	.	+	0	gene_id "YKL183W"; gene_version "1"; transcript_id "YKL183W"; transcript_version "1"; exon_number "1"; gene_name "LOT5"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "LOT5"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKL183W"; protein_version "1";
+XI	ensembl	CDS	631152	632798	.	+	0	gene_id "YKR097W"; gene_version "1"; transcript_id "YKR097W"; transcript_version "1"; exon_number "1"; gene_name "PCK1"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "PCK1"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKR097W"; protein_version "1";
+XI	ensembl	CDS	633029	635179	.	-	0	gene_id "YKR098C"; gene_version "1"; transcript_id "YKR098C"; transcript_version "1"; exon_number "1"; gene_name "UBP11"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "UBP11"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKR098C"; protein_version "1";
+XI	ensembl	CDS	635851	638283	.	+	0	gene_id "YKR099W"; gene_version "1"; transcript_id "YKR099W"; transcript_version "1"; exon_number "1"; gene_name "BAS1"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "BAS1"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKR099W"; protein_version "1";
+XI	ensembl	CDS	638904	639968	.	-	0	gene_id "YKR100C"; gene_version "1"; transcript_id "YKR100C"; transcript_version "1"; exon_number "1"; gene_name "SKG1"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "SKG1"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKR100C"; protein_version "1";
+XI	ensembl	CDS	640540	642501	.	+	0	gene_id "YKR101W"; gene_version "1"; transcript_id "YKR101W"; transcript_version "1"; exon_number "1"; gene_name "SIR1"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "SIR1"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKR101W"; protein_version "1";
+XI	ensembl	CDS	646356	649862	.	+	0	gene_id "YKR102W"; gene_version "1"; transcript_id "YKR102W"; transcript_version "1"; exon_number "1"; gene_name "FLO10"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "FLO10"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKR102W"; protein_version "1";
+XI	ensembl	CDS	653080	656733	.	+	0	gene_id "YKR103W"; gene_version "1"; transcript_id "YKR103W"; transcript_version "1"; exon_number "1"; gene_name "NFT1"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "NFT1"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKR103W"; protein_version "1";
+XI	ensembl	CDS	656836	657753	.	+	0	gene_id "YKR104W"; gene_version "1"; transcript_id "YKR104W"; transcript_version "1"; exon_number "1"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "YKR104W"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKR104W"; protein_version "1";
+XI	ensembl	CDS	658719	660464	.	-	0	gene_id "YKR105C"; gene_version "1"; transcript_id "YKR105C"; transcript_version "1"; exon_number "1"; gene_name "VBA5"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "VBA5"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKR105C"; protein_version "1";
+XI	ensembl	CDS	661442	663286	.	+	0	gene_id "YKR106W"; gene_version "1"; transcript_id "YKR106W"; transcript_version "1"; exon_number "1"; gene_name "GEX2"; gene_source "ensembl"; gene_biotype "protein_coding"; transcript_name "GEX2"; transcript_source "ensembl"; transcript_biotype "protein_coding"; protein_id "YKR106W"; protein_version "1";
 ```
 
 ### 2. ###
@@ -27,7 +27,7 @@ XI	ensembl	CDS	98721	99638	.	+	0	gene_id "YKL183W"; gene_version "1"; transcript
 ```
 
 ### 3. ###
-`awk '$1 != "VI" && $7 =="-" && $3 =="CDS"{print $5-$4+1}' 1.gtf | sort -n | tail -n 2`
+`awk '$1 != "IV" && $7 =="-" && $3 =="CDS"{print $5-$4+1}' 1.gtf | sort -n | tail -n 2`
 ```
 12276
 14730
@@ -43,7 +43,8 @@ YOL081W 9240
 ```
 
 ### 5. ###
-`cat 1.gtf | awk -F'\t' '{print NF}' | sort -n | tail -n 1`
+`cat 1.gtf | awk -F'\t' '{print NF}' | sort -n | uniq -c`
 ```
-9
+      5 1
+  42247 9
 ```
