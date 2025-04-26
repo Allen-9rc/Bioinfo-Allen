@@ -1,10 +1,195 @@
 # Part III. 2.1 
-## 1)
+## 1) RNA-seq 中归一化基因表达值的几种基本计算方法
+**1. 样本内归一化方法**
 
+针对单个样本内基因表达的可比性，主要校正测序深度和基因长度偏差。
+
+(1) CPM（Counts Per Million）
+
+• 公式：
+
+
+$\text{CPM} = \frac{\text{基因原始 reads 数}}{\text{样本总 reads 数}} \times 10^6$
+ 
+
+• 特点：
+
+仅校正测序深度，未考虑基因长度，适用于样本间比较（如总 RNA 量相似的实验）。
+
+不适用于样本内不同基因的比较（长基因的 reads 数天然更高）。
+
+(2) RPKM/FPKM（Reads/Fragments Per Kilobase per Million）
+
+• 公式：
+
+
+$\text{RPKM/FPKM} = \frac{\text{基因 reads 数}}{\text{基因长度（KB）} \times \text{样本总 reads 数（百万）}}$  
+
+• 特点：
+
+同时校正测序深度和基因长度，适用于单样本内不同基因的比较。
+
+缺点：样本间总 RPKM 值差异大，跨样本比较需谨慎。
+
+(3) TPM（Transcripts Per Million）
+
+• 公式：
+
+
+$\text{TPM} = \frac{\text{基因 reads 数}}{\text{基因长度（KB）}} \div \left( \frac{\sum (\text{所有基因 reads 数/基因长度})}{10^6} \right)$
+
+• 特点：
+
+改进版 RPKM，样本间总和固定为 1 百万，更适合跨样本比较。
+
+目前被视为基因定量的“金标准”。
+
+**2. 样本间归一化方法**
+
+针对多样本间的技术差异（如测序深度、文库复杂度），常用于差异表达分析。
+
+(1) TMM（Trimmed Mean of M-values）
+
+• 原理：
+
+假设大部分基因无表达差异，通过修剪极端值（如去除最高/低 30% 的基因）计算样本间缩放因子。
+
+适用于差异基因分析（如 edgeR 默认方法）。
+
+• 优点：对高表达基因和异常值稳健。
+
+(2) DESeq 大小因子（Size Factor）
+
+• 原理：
+
+基于基因表达几何均值的中位数计算缩放因子，假设大多数基因表达稳定。
+
+适用于小样本数据，常用于 DESeq2 流程。
+
+• 公式：
+
+
+$\text{Size Factor} = \text{median} \left( \frac{\text{基因 counts}}{\text{所有样本的几何均值}} \right)$  
+
+(3) 分位数归一化（Quantile Normalization）
+
+• 原理：
+
+强制所有样本的表达量分布一致（均值替换为相同分位数值）。
+
+适用于批次效应校正，但可能掩盖真实生物学差异。
+
+**3. 高级与跨数据集归一化方法**
+
+(1) Z-Score 标准化
+
+• 公式：
+
+
+$Z = \frac{X - \mu}{\sigma}$ 
+
+X：基因表达值  
+$\mu$ ：所有样本均值  
+$\sigma$：标准差
+
+• 应用：消除量纲差异，用于跨平台数据整合或热图可视化。
+
+(2) 跨数据集批次校正
+
+• 工具：如 ComBat 或 Limma，通过经验贝叶斯方法校正批次效应。
+
+• 适用场景：整合不同实验、平台或时间点的数据。
 ## 2)
-
+Answer: E; D; A
 ## 3)
+### sequencing protocol判断
+输入：
+`/usr/local/bin/infer_experiment.py -r GTF/Arabidopsis_thaliana.TAIR10.34.bed -i bam/Shape02.bam`  
+输出:
+```bash
+Reading reference gene model GTF/Arabidopsis_thaliana.TAIR10.34.bed ... Done
+Loading SAM/BAM file ...  Total 200000 usable reads were sampled
 
+
+This is PairEnd Data
+Fraction of reads failed to determine: 0.0315
+Fraction of reads explained by "1++,1--,2+-,2-+": 0.4769
+Fraction of reads explained by "1+-,1-+,2++,2--": 0.4916
+```
+由于"1++,1--,2+-,2-+"与"1+-,1-+,2++,2--"的比例几乎相同，有很大的把握认定这个数据是由非链特异性建库得到的。
+### 计算shape02的read count matrix，给出AT1G09530基因(PIF3基因)上的counts数目
+输入：
+```
+/home/software/subread-2.0.3-source/bin/featureCounts -s 0 -p -t exon -g gene_id -a GTF/Arabidopsis_thaliana.TAIR10.34.gtf -o result/Shape02.featurecounts.exon.txt bam/Shape02.bam
+```
+输出：
+```bash
+
+        ==========     _____ _    _ ____  _____  ______          _____
+        =====         / ____| |  | |  _ \|  __ \|  ____|   /\   |  __ \
+          =====      | (___ | |  | | |_) | |__) | |__     /  \  | |  | |
+            ====      \___ \| |  | |  _ <|  _  /|  __|   / /\ \ | |  | |
+              ====    ____) | |__| | |_) | | \ \| |____ / ____ \| |__| |
+        ==========   |_____/ \____/|____/|_|  \_\______/_/    \_\_____/
+	  v2.0.3
+
+//========================== featureCounts setting ===========================\\
+||                                                                            ||
+||             Input files : 1 BAM file                                       ||
+||                                                                            ||
+||                           Shape02.bam                                      ||
+||                                                                            ||
+||             Output file : Shape02.featurecounts.exon.txt                   ||
+||                 Summary : Shape02.featurecounts.exon.txt.summary           ||
+||              Paired-end : yes                                              ||
+||        Count read pairs : no                                               ||
+||              Annotation : Arabidopsis_thaliana.TAIR10.34.gtf (GTF)         ||
+||      Dir for temp files : result                                           ||
+||                                                                            ||
+||                 Threads : 1                                                ||
+||                   Level : meta-feature level                               ||
+||      Multimapping reads : not counted                                      ||
+|| Multi-overlapping reads : not counted                                      ||
+||   Min overlapping bases : 1                                                ||
+||                                                                            ||
+\\============================================================================//
+
+//================================= Running ==================================\\
+||                                                                            ||
+|| Load annotation file Arabidopsis_thaliana.TAIR10.34.gtf ...                ||
+||    Features : 313952                                                       ||
+||    Meta-features : 32833                                                   ||
+||    Chromosomes/contigs : 7                                                 ||
+||                                                                            ||
+|| Process BAM file Shape02.bam...                                            ||
+||    Paired-end reads are included.                                          ||
+||    The reads are assigned on the single-end mode.                          ||
+||    Total alignments : 2730443                                              ||
+||    Successfully assigned alignments : 2559170 (93.7%)                      ||
+||    Running time : 0.03 minutes                                             ||
+||                                                                            ||
+|| Write the final count table.                                               ||
+|| Write the read assignment summary.                                         ||
+||                                                                            ||
+|| Summary of counting results can be found in file "result/Shape02.featurec  ||
+|| ounts.exon.txt.summary"                                                    ||
+||                                                                            ||
+\\============================================================================//
+```
+输入：
+```bash
+cat Shape02.featurecounts.exon.txt|awk '$1 =="AT1G09530" { print $7 } '
+```
+输出：
+```
+86
+```
+**故AT1G09530的counts数为86**  
+输入：
+```bash
+cat Shape02.featurecounts.exon.txt|awk '!/^#/ {print $1, $7} '>/home/test/share/Shape02.featurecounts.exon.matrix.txt
+```
+***输出文件表达矩阵”Shape02.featurecounts.exon.matrix.txt“另附于作业中***
 ## 4)
 
 # Part III. 2.3
