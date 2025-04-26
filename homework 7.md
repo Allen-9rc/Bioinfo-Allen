@@ -191,7 +191,82 @@ cat Shape02.featurecounts.exon.txt|awk '!/^#/ {print $1, $7} '>/home/test/share/
 ```
 ***输出文件表达矩阵”Shape02.featurecounts.exon.matrix.txt“另附于作业中***
 ## 4)
-
+R脚本：
+```r
+#COAD
+setwd("~/Desktop/ZhaoAnlun_Bioinfo2/tumor-transcriptome-demo/COAD")
+files <- list.files(full.names = T)
+COAD_df <- data.frame(c(1:2000))
+for (i in files){
+  COAD_vec <- read.table(i,sep = "\t",skip = 1,header = T,row.names = 1)[,6]
+  COAD_df <- cbind(COAD_df,COAD_vec)
+}
+COAD_df <- COAD_df[,-1]  
+files1 <- sub("\\.txt$","",files)
+colnames(COAD_df) <- files1
+rownames(COAD_df) <- read.table(files[1],sep = "\t",skip = 1,header = T)[,1]  
+COAD_matrix <- as.matrix(COAD_df)
+library(edgeR)
+y <- DGEList(counts = COAD_matrix) 
+COAD.CPM.matrix <- edgeR::cpm(y,log=F) 
+log10.COAD.CPM.matrix <- log10(COAD.CPM.matrix+1) 
+COAD.z.scores <- (log10.COAD.CPM.matrix - rowMeans(log10.COAD.CPM.matrix))/apply(log10.COAD.CPM.matrix,1,sd)
+library(pheatmap)
+pheatmap(COAD.z.scores,treeheight_row = 140,treeheight_col = 11,cluster_cols = F,cluster_rows = F,
+         color = colorRampPalette(c("blue","white","red"))(20000),border_color = NA,
+         fontsize = 10,fontsize_row = 10,fontsize_col = 10,display_numbers = F,
+         labels_row = rep("", nrow(COAD_df)), labels_col = rep("", ncol(COAD_df))) 
+  
+#ESCA
+setwd("~/Desktop/ZhaoAnlun_Bioinfo2/tumor-transcriptome-demo/ESCA")
+files <- list.files(full.names = T)
+ESCA_df <- data.frame(c(1:2000))
+for (i in files){
+  ESCA_vec <- read.table(i,sep = "\t",skip = 1,header = T,row.names = 1)[,6]
+  ESCA_df <- cbind(ESCA_df,ESCA_vec)
+}
+ESCA_df <- ESCA_df[,-1]  
+files1 <- sub("\\.txt$","",files)
+colnames(ESCA_df) <- files1
+rownames(ESCA_df) <- read.table(files[1],sep = "\t",skip = 1,header = T)[,1]  
+ESCA_matrix <- as.matrix(ESCA_df)
+library(edgeR)
+y <- DGEList(counts = ESCA_matrix) 
+ESCA.CPM.matrix <- edgeR::cpm(y,log=F) 
+log10.ESCA.CPM.matrix <- log10(ESCA.CPM.matrix+1) 
+ESCA.z.scores <- (log10.ESCA.CPM.matrix - rowMeans(log10.ESCA.CPM.matrix))/apply(log10.ESCA.CPM.matrix,1,sd)
+library(pheatmap)
+pheatmap(ESCA.z.scores,treeheight_row = 140,treeheight_col = 11,cluster_cols = F,cluster_rows = F,
+         color = colorRampPalette(c("blue","white","red"))(20000),border_color = NA,
+         fontsize = 10,fontsize_row = 10,fontsize_col = 10,display_numbers = F,
+         labels_row = rep("", nrow(ESCA_df)), labels_col = rep("", ncol(ESCA_df))) 
+  
+#READ
+setwd("~/Desktop/ZhaoAnlun_Bioinfo2/tumor-transcriptome-demo/READ")
+files <- list.files(full.names = T)
+READ_df <- data.frame(c(1:2000))
+for (i in files){
+  READ_vec <- read.table(i,sep = "\t",skip = 1,header = T,row.names = 1)[,6]
+  READ_df <- cbind(READ_df,READ_vec)
+}
+READ_df <- READ_df[,-1]  
+files1 <- sub("\\.txt$","",files)
+colnames(READ_df) <- files1
+rownames(READ_df) <- read.table(files[1],sep = "\t",skip = 1,header = T)[,1]  
+READ_matrix <- as.matrix(READ_df)
+library(edgeR)
+y <- DGEList(counts = READ_matrix) 
+READ.CPM.matrix <- edgeR::cpm(y,log=F) 
+log10.READ.CPM.matrix <- log10(READ.CPM.matrix+1) 
+READ.z.scores <- (log10.READ.CPM.matrix - rowMeans(log10.READ.CPM.matrix))/apply(log10.READ.CPM.matrix,1,sd)
+library(pheatmap)
+pheatmap(READ.z.scores,treeheight_row = 140,treeheight_col = 11,cluster_cols = F,cluster_rows = F,
+         color = colorRampPalette(c("blue","white","red"))(20000),border_color = NA,
+         fontsize = 10,fontsize_row = 10,fontsize_col = 10,display_numbers = F,
+         labels_row = rep("", nrow(READ_df)), labels_col = rep("", ncol(READ_df)))   
+```
+***heatmap另附于作业中***
+根据heatmap结果，**READ和COAD**的转录组最相似。
 # Part III. 2.3
 ## 1.
 - 多重检验校正（multiple testing correction）  
