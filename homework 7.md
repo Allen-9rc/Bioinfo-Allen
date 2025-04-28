@@ -417,12 +417,16 @@ R脚本如下：
 edger.result <- read.table("~/Desktop/大二下/生物信息学/homework7/edger.diff.uvr8.light.vs.dark.txt", sep='\t',header = T,row.names = 1)
 edger.result1 <- edger.result[order(edger.result$logFC),]
 edger.result2 <- edger.result[order(-edger.result$logFC),]
-selected_genes <- rbind(edger.result1[c(1:10),],edger.result2[c(1:10),])
-selected_genes$log10CPM <- log10(2^selected_genes$logCPM)
-heatmap.matrix <- as.matrix(scale(selected_genes))
+selected_genes <- row.names(rbind(edger.result1[c(1:10),],edger.result2[c(1:10),]))
+raw.counts <- read.table("~/Desktop/ZhaoAnlun_Bioinfo2/count_exon.txt", sep='\t', header = T,row.names = 1)
+seleted.counts <- raw.counts[selected_genes,c(7:12)]
+library.size <- colSums(seleted.counts)
+cpm <- t(t(seleted.counts) / library.size) * 1e6
+log10.cpm.selected <- log10(cpm+1)
+heatmap.matrix <- as.matrix(scale(log10.cpm.selected))
 library(pheatmap)
-pheatmap(heatmap.matrix,treeheight_row = 140,treeheight_col = 11,cluster_cols = F,cluster_rows = F,
-         color = colorRampPalette(c("yellow","white","red"))(10000),border_color = NA,
+pheatmap(heatmap.matrix,cluster_cols = T,cluster_rows = T,
+         color = colorRampPalette(c("blue","white","red"))(30000),border_color = NA,
          fontsize = 10,fontsize_row = 10,fontsize_col = 10,display_numbers = F)
 ```
 ***图片文件“heatmap.png”另附于作业中***
